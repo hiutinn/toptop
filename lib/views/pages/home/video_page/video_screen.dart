@@ -15,7 +15,6 @@ import '../user_page/people_detail_screen.dart';
 
 class VideoScreen extends StatelessWidget {
   VideoScreen({Key? key}) : super(key: key);
-
   String? uid = FirebaseAuth.instance.currentUser?.uid;
 
   //final TextEditingController _textEditingController = TextEditingController();
@@ -23,6 +22,22 @@ class VideoScreen extends StatelessWidget {
   final CollectionReference users =
   FirebaseFirestore.instance.collection('users');
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<dynamic> list = [''];
+  Stream<QuerySnapshot> fetch() {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<dynamic> list2 = snapshot.data()!['following'];
+      QuerySnapshot videoSnapshot = await FirebaseFirestore.instance
+          .collection('videos')
+          .where('uid', whereIn: list2)
+          .get();
+      return videoSnapshot;
+    });
+  }
+
 
   // String avatarURL = '';
   // String userName = '';
@@ -537,11 +552,13 @@ class VideoScreen extends StatelessWidget {
       initialIndex: 1,
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black,
         body: Stack(
           children: [
             TabBarView(
-              children: [body(context), body(context)],
+              children: [
+                body(context,true),
+                body(context,false)],
             ),
             const Positioned(
               top: 0,
@@ -583,13 +600,13 @@ class VideoScreen extends StatelessWidget {
     );
   }
 
-  Widget body(BuildContext context) {
+  Widget body(BuildContext context,bool check) {
     return SingleChildScrollView(
       physics: const ClampingScrollPhysics(),
       child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
+        stream:check ? fetch() : FirebaseFirestore.instance
             .collection('videos')
-            .where('uid', isNotEqualTo: uid)
+            .where('uid',whereNotIn: [uid])
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -612,7 +629,9 @@ class VideoScreen extends StatelessWidget {
                 final Video item = Video.fromSnap(snapshot.data!.docs[index]);
                 return Stack(
                   children: [
-                    Positioned.fill(
+                    Positioned(
+                      top: index %2 == 0 ?  MediaQuery.of(context).size.height * 0.25 : null,
+                      bottom:index %2 == 0 ? MediaQuery.of(context).size.height * 0.25 : null,
                       child: VideoPlayerItem(
                         videoUrl: item.videoUrl,
                       ),

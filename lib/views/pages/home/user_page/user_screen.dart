@@ -82,10 +82,10 @@ class _UserInfoScreenState extends State<UserInfoScreen>
       context: context,
       builder: (context) => SimpleDialog(
         children: [
-          const Center(
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text(
                   'SIGN OUT',
                   style: TextStyle(fontSize: 25, color: Colors.red),
@@ -105,8 +105,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 onPressed: () {
                   AuthService.Logout(context: context);
                 },
-                child: const Row(
-                  children: [
+                child: Row(
+                  children: const [
                     Icon(
                       Icons.done,
                       color: Colors.green,
@@ -123,8 +123,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
               ),
               SimpleDialogOption(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Row(
-                  children: [
+                child: Row(
+                  children: const [
                     Icon(
                       Icons.cancel,
                       color: Colors.red,
@@ -157,9 +157,9 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 MaterialPageRoute(builder: (context) => EditUserInfoScreen()),
               );
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              children: const [
                 Icon(Icons.edit),
                 Padding(
                   padding: EdgeInsets.all(7.0),
@@ -177,9 +177,9 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 MaterialPageRoute(builder: (context) => UpdatePasswordScreen()),
               );
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              children: const [
                 Icon(Icons.lock_clock),
                 Padding(
                   padding: EdgeInsets.all(7.0),
@@ -193,8 +193,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => pickVideo(ImageSource.gallery, context),
-            child: const Row(
-              children: [
+            child: Row(
+              children: const [
                 Icon(Icons.image),
                 Padding(
                   padding: EdgeInsets.all(7.0),
@@ -208,8 +208,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => pickVideo(ImageSource.camera, context),
-            child: const Row(
-              children: [
+            child: Row(
+              children: const [
                 Icon(Icons.camera_alt),
                 Padding(
                   padding: EdgeInsets.all(7.0),
@@ -223,8 +223,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Row(
-              children: [
+            child: Row(
+              children: const [
                 Icon(
                   Icons.cancel,
                   color: Colors.red,
@@ -436,7 +436,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => EditUserInfoScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => EditUserInfoScreen()),
                         );
                       },
                       child: Container(
@@ -459,7 +460,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => UpdatePasswordScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => UpdatePasswordScreen()),
                         );
                       },
                       child: Container(
