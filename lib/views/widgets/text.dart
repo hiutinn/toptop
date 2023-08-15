@@ -18,7 +18,7 @@ class CustomText extends StatelessWidget {
       this.alignment = Alignment.topLeft,
       this.maxLines,
       this.height = 1,
-      this.fontFamily = 'SquarePeg',
+      this.fontFamily = 'Tiktok_Sans',
       this.fontWeight = 1});
 
   @override

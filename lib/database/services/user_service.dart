@@ -25,10 +25,10 @@ class UserService {
     return result;
   }
 
-  static Future getPeopleInfo(String peopleID) async {
+  static Stream getPeopleInfo(String peopleID) {
     final CollectionReference users =
         FirebaseFirestore.instance.collection('users');
-    final result = await users.doc(peopleID).get();
+    final result = users.doc(peopleID).snapshots();
     // final UserModel user = UserModel(
     //     gender: result.get('gender'),
     //     email: result.get('email'),
@@ -56,6 +56,8 @@ class UserService {
             'uID': UID,
             'fullName': fullName,
             'email': email,
+            'following': [],
+            'follower': [],
             'avartaURL':
                 'https://iotcdn.oss-ap-southeast-1.aliyuncs.com/RpN655D.png',
             'phone': 'None',
@@ -157,6 +159,39 @@ class UserService {
         'Fail. $e',
         Colors.red,
       ).show(context);
+    }
+  }
+
+  static Future<void> follow(String uid) async {
+
+    String currentUid = FirebaseAuth.instance.currentUser!.uid;
+    print("$currentUid.........$uid");
+
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUid)
+        .get();
+    if ((doc.data()! as dynamic)['following'].contains(uid)) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUid)
+          .update({
+        'following': FieldValue.arrayRemove([uid]),
+      });
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'follower': FieldValue.arrayRemove([currentUid]),
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUid)
+          .update({
+        'following': FieldValue.arrayUnion([uid]),
+      });
+
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'follower': FieldValue.arrayUnion([currentUid]),
+      });
     }
   }
 }

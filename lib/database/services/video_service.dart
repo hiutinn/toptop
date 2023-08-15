@@ -17,12 +17,12 @@ class VideoServices {
     }
   }
 
-  static likeComment(String videoID, String Commentid) async {
+  static likeComment(String videoID, String commentId) async {
     DocumentSnapshot doc = await FirebaseFirestore.instance
         .collection('videos')
         .doc(videoID)
         .collection('commentList')
-        .doc(Commentid)
+        .doc(commentId)
         .get();
     String? uid = FirebaseAuth.instance.currentUser?.uid;
     if ((doc.data()! as dynamic)['likes'].contains(uid)) {
@@ -30,7 +30,7 @@ class VideoServices {
           .collection('videos')
           .doc(videoID)
           .collection('commentList')
-          .doc(Commentid)
+          .doc(commentId)
           .update({
         'likes': FieldValue.arrayRemove([uid]),
       });
@@ -39,7 +39,7 @@ class VideoServices {
           .collection('videos')
           .doc(videoID)
           .collection('commentList')
-          .doc(Commentid)
+          .doc(commentId)
           .update({
         'likes': FieldValue.arrayUnion([uid]),
       });

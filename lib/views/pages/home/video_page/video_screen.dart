@@ -327,7 +327,7 @@ class VideoScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    final page2 = Container(
+    final page2 = SizedBox(
       height: MediaQuery.of(context).size.height * 3 / 4,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -543,13 +543,13 @@ class VideoScreen extends StatelessWidget {
             TabBarView(
               children: [body(context), body(context)],
             ),
-            Positioned(
+            const Positioned(
               top: 0,
               left: 0,
               right: 0,
-              child: Container(
+              child: SizedBox(
                 height: 50,
-                child: const TabBar(
+                child: TabBar(
                   tabs: [
                     Tab(
                       child: Text(
@@ -600,9 +600,9 @@ class VideoScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return Container(
+          return SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 90,
+            height: MediaQuery.of(context).size.height * 0.91,
             child: PageView.builder(
               dragStartBehavior: DragStartBehavior.down,
               itemCount: snapshot.data!.docs.length,
@@ -612,8 +612,10 @@ class VideoScreen extends StatelessWidget {
                 final Video item = Video.fromSnap(snapshot.data!.docs[index]);
                 return Stack(
                   children: [
-                    VideoPlayerItem(
-                      videoUrl: item.videoUrl,
+                    Positioned.fill(
+                      child: VideoPlayerItem(
+                        videoUrl: item.videoUrl,
+                      ),
                     ),
                     Column(
                       children: [
@@ -645,7 +647,7 @@ class VideoScreen extends StatelessWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        '${item.caption}',
+                                        item.caption,
                                         style: const TextStyle(
                                             fontSize: 15,
                                             color: Colors.white60),
@@ -660,7 +662,7 @@ class VideoScreen extends StatelessWidget {
                                             color: Colors.white,
                                           ),
                                           Text(
-                                            '${item.songName}',
+                                            item.songName,
                                             style: const TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.white),

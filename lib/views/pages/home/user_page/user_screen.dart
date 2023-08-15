@@ -29,6 +29,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   String? uid = FirebaseAuth.instance.currentUser?.uid;
+
   // File? imageFile;
 
   @override
@@ -48,7 +49,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
   }
 
   Stream<QuerySnapshot> getUserImage() async* {
-    final currentUserID = await FirebaseAuth.instance.currentUser?.uid;
+    final currentUserID = FirebaseAuth.instance.currentUser?.uid;
     yield* FirebaseFirestore.instance
         .collection('users')
         .where('uID', isEqualTo: currentUserID)
@@ -56,19 +57,24 @@ class _UserInfoScreenState extends State<UserInfoScreen>
   }
 
   pickVideo(ImageSource src, BuildContext context) async {
-   await ImagePicker().pickVideo(source: src).then((video) =>
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => AddVideoScreen(
-              videoFile: File(video!.path),
-              videoPath: video.path,
-            ),
-          ),
-        )
-    );
-    // if (video != null) {
+    try {
+      final video = await ImagePicker().pickVideo(source: src);
+      print("Videoooooooooooooooooo: $video");
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (context) => AddVideoScreen(
+      //       videoFile: File(video!.path),
+      //       videoPath: video.path,
+      //     ),
+      //   ),
+      // )
 
-    // }
+      // if (video != null) {
+
+      // }
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   showLogoutDialog(BuildContext context) {
@@ -76,7 +82,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
       context: context,
       builder: (context) => SimpleDialog(
         children: [
-          Center(
+          const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -99,7 +105,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 onPressed: () {
                   AuthService.Logout(context: context);
                 },
-                child:  Row(
+                child: const Row(
                   children: [
                     Icon(
                       Icons.done,
@@ -117,7 +123,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
               ),
               SimpleDialogOption(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(
                       Icons.cancel,
@@ -147,12 +153,11 @@ class _UserInfoScreenState extends State<UserInfoScreen>
         children: [
           SimpleDialogOption(
             onPressed: () {
-              Navigator.push(
-                context,
+              Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => EditUserInfoScreen()),
               );
             },
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Icons.edit),
@@ -168,12 +173,11 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () {
-              Navigator.push(
-                context,
+              Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => UpdatePasswordScreen()),
               );
             },
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Icons.lock_clock),
@@ -189,7 +193,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => pickVideo(ImageSource.gallery, context),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(Icons.image),
                 Padding(
@@ -204,7 +208,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => pickVideo(ImageSource.camera, context),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(Icons.camera_alt),
                 Padding(
@@ -219,7 +223,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => Navigator.of(context).pop(),
-            child:  Row(
+            child: const Row(
               children: [
                 Icon(
                   Icons.cancel,
@@ -276,9 +280,8 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                     ),
                     Center(
                       child: CustomText(
-                        fontsize: 40,
+                        fontsize: 20,
                         text: '${snapshot.data.get('fullName')}',
-                        fontFamily: 'DancingScript',
                         color: Colors.black,
                       ),
                     ),
@@ -373,12 +376,109 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 const SizedBox(height: 10),
                 CustomText(
                   alignment: Alignment.center,
-                  fontsize: 25,
+                  fontsize: 16,
                   text: '${snapshot.data.get('email')}',
-                  fontFamily: 'DancingScript',
                   color: Colors.black,
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          snapshot.data.get('following').length.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Đang follow",
+                          style: TextStyle(
+                              fontSize: 14, color: Colors.grey.shade700),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          snapshot.data.get('follower').length.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Follower",
+                          style: TextStyle(
+                              fontSize: 14, color: Colors.grey.shade700),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => EditUserInfoScreen()),
+                        );
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.08),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: const Text(
+                            "Sửa hồ sơ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                fontSize: 14),
+                          )),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => UpdatePasswordScreen()),
+                        );
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.08),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: const Text(
+                            "Sửa mật khẩu",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                fontSize: 14),
+                          )),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
                 SizedBox(
                   height: 50,
                   child: TabBar(
