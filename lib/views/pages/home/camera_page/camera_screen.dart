@@ -75,7 +75,7 @@ class _CameraScreenState extends State<CameraScreen> {
               Container(
                 color: Colors.black,
                 padding: const EdgeInsets.symmetric(vertical: 32),
-                width: MediaQuery.sizeOf(context).width,
+                width: MediaQuery.of(context).size.width,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
