@@ -76,7 +76,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
       context: context,
       builder: (context) => SimpleDialog(
         children: [
-          const Center(
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -99,7 +99,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 onPressed: () {
                   AuthService.Logout(context: context);
                 },
-                child: const Row(
+                child:  Row(
                   children: [
                     Icon(
                       Icons.done,
@@ -117,7 +117,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
               ),
               SimpleDialogOption(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Row(
+                child: Row(
                   children: [
                     Icon(
                       Icons.cancel,
@@ -152,7 +152,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 MaterialPageRoute(builder: (context) => EditUserInfoScreen()),
               );
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Icons.edit),
@@ -173,7 +173,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                 MaterialPageRoute(builder: (context) => UpdatePasswordScreen()),
               );
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Icons.lock_clock),
@@ -189,7 +189,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => pickVideo(ImageSource.gallery, context),
-            child: const Row(
+            child: Row(
               children: [
                 Icon(Icons.image),
                 Padding(
@@ -204,7 +204,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => pickVideo(ImageSource.camera, context),
-            child: const Row(
+            child: Row(
               children: [
                 Icon(Icons.camera_alt),
                 Padding(
@@ -219,7 +219,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
           ),
           SimpleDialogOption(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Row(
+            child:  Row(
               children: [
                 Icon(
                   Icons.cancel,

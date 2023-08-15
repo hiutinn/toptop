@@ -17,7 +17,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
         .textTheme
         .bodyMedium!
         .copyWith(fontSize: 11, fontWeight: FontWeight.w600);
-    var barHeight = MediaQuery.sizeOf(context).height * 0.06;
+    var barHeight = MediaQuery.of(context).size.height * 0.06;
     return BottomAppBar(
       child: Container(
         color: selectedScreenIndex == 0 ? Colors.black : Colors.white,
