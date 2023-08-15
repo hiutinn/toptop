@@ -72,13 +72,18 @@ class AuthService {
       {required BuildContext context,
       required email,
       required password,
-      required fullName}) async {
+      required fullName,
+      required uid}) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      print('${userCredential.user?.uid}');
-      await UserService.addUser(
-          UID: userCredential.user?.uid, fullName: fullName, email: email);
+      if(email == null || password == null){
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        await UserService.addUser(
+            UID: userCredential.user?.uid, fullName: fullName, email: email);
+      }else{
+        await UserService.addUser(
+            UID: uid, fullName: fullName, email: email);
+      }
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),

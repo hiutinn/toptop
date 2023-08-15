@@ -2,6 +2,9 @@ import 'package:chat_app_project/database/models/gender_model.dart';
 import 'package:chat_app_project/database/models/loading_model.dart';
 import 'package:chat_app_project/database/models/save_model.dart';
 import 'package:chat_app_project/views/pages/auth/auth_screen.dart';
+import 'package:chat_app_project/views/pages/auth/login_phone.dart';
+import 'package:chat_app_project/views/pages/auth/login_phone_screen.dart';
+import 'package:chat_app_project/views/pages/auth/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,6 +28,10 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => SaveModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => LoginPhoneProvider(),
+          child: LoginWithPhoneNumber(),
+        )
       ],
       child: const MyApp(),
     ),
@@ -41,7 +48,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(textTheme: GoogleFonts.varelaRoundTextTheme()),
-      home: const AuthScreen(),
+      home: AuthScreen(),
     );
   }
 }
