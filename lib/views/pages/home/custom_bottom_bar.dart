@@ -1,8 +1,9 @@
+import 'package:chat_app_project/views/pages/home/camera_page/camera_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAnimatedBottomBar extends StatelessWidget {
-  const CustomAnimatedBottomBar({
+  CustomAnimatedBottomBar({
     Key? key,
     required this.selectedScreenIndex,
     required this.onItemTap,
@@ -10,7 +11,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
 
   final int selectedScreenIndex;
   final Function onItemTap;
-
+  bool _isNavigating = false; // Flag to control navigation
   @override
   Widget build(BuildContext context) {
     var style = Theme.of(context)
@@ -28,7 +29,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
           children: [
             _bottomNavBarItem(0, "Home", style, 'home'),
             _bottomNavBarItem(1, "Home", style, 'home'),
-            _addVideoNavItem(barHeight),
+            _addVideoNavItem(context, barHeight),
             _bottomNavBarItem(2, "Home", style, 'home'),
             _bottomNavBarItem(3, "Home", style, 'home'),
           ],
@@ -66,25 +67,42 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     );
   }
 
-  _addVideoNavItem(double barHeight) {
-    return 
-      Container(
-      height: barHeight - 15,
-      width: 48,
-      decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Colors.blueAccent, Colors.redAccent],
+  _addVideoNavItem(BuildContext context, double barHeight) {
+    return InkWell(
+      onTap: () {
+        if (_isNavigating) {
+          print("Navigation is already in progress.");
+          return; // Avoid triggering navigation if another navigation is ongoing.
+        }
+
+        _isNavigating =
+            true; // Set the flag to indicate navigation is in progress
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+          return const CameraScreen();
+        })).then((_) {
+          _isNavigating = false; // Reset the flag after navigation is complete
+        });
+      },
+      child: Container(
+        height: barHeight - 15,
+        width: 48,
+        decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Colors.blueAccent, Colors.redAccent],
+            ),
+            borderRadius: BorderRadius.circular(8)),
+        child: Center(
+          child: Container(
+            width: 40,
+            height: barHeight - 15,
+            decoration: BoxDecoration(
+                color: selectedScreenIndex == 0 ? Colors.white : Colors.black,
+                borderRadius: BorderRadius.circular(8)),
+            child: Icon(
+              Icons.add,
+              color: selectedScreenIndex == 0 ? Colors.black : Colors.white,
+            ),
           ),
-          borderRadius: BorderRadius.circular(8)),
-      child: Center(
-        child: Container(
-          width: 40,
-          height: barHeight - 15,
-          decoration: BoxDecoration(
-            color: selectedScreenIndex == 0 ? Colors.white : Colors.black,
-            borderRadius: BorderRadius.circular(8)
-          ),
-          child: Icon(Icons.add, color: selectedScreenIndex == 0 ? Colors.black : Colors.white,),
         ),
       ),
     );

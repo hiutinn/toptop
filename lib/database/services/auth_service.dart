@@ -23,10 +23,10 @@ class AuthService {
       await storage.write(key: 'uID', value: uID);
       String? value = await storage.read(key: 'uID');
       FocusScope.of(context).unfocus();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false);
       getSnackBar(
         'Login',
         'Login Success.',
@@ -56,9 +56,10 @@ class AuthService {
       FirebaseAuth.instance.signOut();
       final storage = FlutterSecureStorage();
       await storage.deleteAll();
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const AuthScreen()),
+        (route) => false,
       );
       getSnackBar(
         'Logout',
@@ -75,14 +76,13 @@ class AuthService {
       required fullName,
       required uid}) async {
     try {
-      if(email == null || password == null){
+      if (email == null || password == null) {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         await UserService.addUser(
             UID: userCredential.user?.uid, fullName: fullName, email: email);
-      }else{
-        await UserService.addUser(
-            UID: uid, fullName: fullName, email: email);
+      } else {
+        await UserService.addUser(UID: uid, fullName: fullName, email: email);
       }
       Navigator.push(
         context,

@@ -69,8 +69,10 @@ class StorageServices {
 
   static Future<String> uploadImageToStorage(
       String id, String videoPath) async {
+    String currentUid = FirebaseAuth.instance.currentUser!.uid;
+
     Reference ref =
-        FirebaseStorage.instance.ref().child('thumbnails').child(id);
+        FirebaseStorage.instance.ref().child('thumbnails').child(currentUid).child(id);
     UploadTask uploadTask = ref.putFile(await getThumbnail(videoPath));
     TaskSnapshot snap = await uploadTask;
     String downloadUrl = await snap.ref.getDownloadURL();
@@ -109,7 +111,7 @@ class StorageServices {
 
       await FirebaseFirestore.instance
           .collection('videos')
-          .doc('Video $len')
+          .doc(videoId)
           .set(
             video.toJson(),
           )

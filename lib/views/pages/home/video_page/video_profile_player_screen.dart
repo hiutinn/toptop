@@ -103,7 +103,7 @@ class VideoProfileScreen extends StatelessWidget {
   _showBottomSheet(BuildContext context, String videoID) {
     final TextEditingController _textEditingController =
         TextEditingController();
-    final page2 = Container(
+    final page2 = SizedBox(
       height: MediaQuery.of(context).size.height * 3 / 4,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +191,7 @@ class VideoProfileScreen extends StatelessWidget {
                                                 fontSize: 14,
                                                 color: Colors.black38),
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -259,7 +259,7 @@ class VideoProfileScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
+            child: SizedBox(
               height: 40,
               child: TextField(
                 controller: _textEditingController,
@@ -326,11 +326,11 @@ class VideoProfileScreen extends StatelessWidget {
           }
           if (snapshot.hasData) {
             final Video item = Video.fromSnap(snapshot.data!.docs[0]);
-            return Container(
+            return SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
@@ -369,7 +369,7 @@ class VideoProfileScreen extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Text(
-                                          '${item.caption}',
+                                          item.caption,
                                           style: const TextStyle(
                                               fontSize: 15,
                                               color: Colors.white60),
@@ -384,7 +384,7 @@ class VideoProfileScreen extends StatelessWidget {
                                               color: Colors.white,
                                             ),
                                             Text(
-                                              '${item.songName}',
+                                              item.songName,
                                               style: const TextStyle(
                                                   fontSize: 15,
                                                   color: Colors.white),
@@ -512,7 +512,7 @@ class VideoProfileScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_back_ios,
                             color: Colors.white,
                           ),

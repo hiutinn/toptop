@@ -8,4 +8,5 @@ class MyColors {
   // static Color thirdColor = Colors.purple.shade200;
   static Color thirdColor = const Color.fromRGBO(255, 141, 165, 1.0);
   static Color yellowColor = const Color.fromARGB(255, 247, 203, 128);
+  static Color pinkColor = const Color.fromRGBO(255, 0, 80, 1);
 }

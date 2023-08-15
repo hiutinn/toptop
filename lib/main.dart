@@ -47,7 +47,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(textTheme: GoogleFonts.varelaRoundTextTheme()),
+      theme: ThemeData(
+          textTheme: GoogleFonts.varelaRoundTextTheme().copyWith(
+            bodySmall: const TextStyle(fontFamily: "Tiktok_Sans"),
+            bodyMedium: const TextStyle(fontFamily: "Tiktok_Sans"),
+            bodyLarge: const TextStyle(fontFamily: "Tiktok_Sans")
+          ),
+      ),
       home: AuthScreen(),
     );
   }

@@ -18,6 +18,7 @@ import 'add_video_screen.dart';
 
 class PeopleInfoScreen extends StatefulWidget {
   final String peopleID;
+
   const PeopleInfoScreen({Key? key, required this.peopleID}) : super(key: key);
 
   @override
@@ -28,6 +29,7 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   String? uid = FirebaseAuth.instance.currentUser?.uid;
+
   // File? imageFile;
 
   @override
@@ -37,16 +39,16 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
   }
 
   Future<File?> getImage() async {
-    var _picker = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (_picker != null) {
-      File? imageFile = File(_picker.path);
+    var picker = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picker != null) {
+      File? imageFile = File(picker.path);
       return imageFile;
     }
     return null;
   }
 
   Stream<QuerySnapshot> getUserImage() async* {
-    final currentUserID = await FirebaseAuth.instance.currentUser?.uid;
+    final currentUserID = FirebaseAuth.instance.currentUser?.uid;
     yield* FirebaseFirestore.instance
         .collection('users')
         .where('uID', isEqualTo: currentUserID)
@@ -77,8 +79,8 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: UserService.getPeopleInfo(widget.peopleID),
+      body: StreamBuilder(
+        stream: UserService.getPeopleInfo(widget.peopleID),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');
@@ -102,7 +104,7 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
                     // ),
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      iconSize: 25,
+                      iconSize: 24,
                       icon: const Icon(
                         Icons.arrow_back_ios,
                         color: Colors.black87,
@@ -110,9 +112,8 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
                     ),
                     Center(
                       child: CustomText(
-                        fontsize: 40,
+                        fontsize: 20,
                         text: '${snapshot.data.get('fullName')}',
-                        fontFamily: 'DancingScript',
                         color: Colors.black,
                       ),
                     ),
@@ -121,7 +122,7 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
                         ChatService.getChatID(
                           context: context,
                           peopleID: snapshot.data.get('uID'),
-                          currentUserID: '${uid}',
+                          currentUserID: '$uid',
                           peopleName: snapshot.data.get('fullName'),
                           peopleImage: snapshot.data.get('avartaURL'),
                         );
@@ -135,12 +136,12 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
                   ],
                 ),
                 const SizedBox(height: 10),
-                Container(
+                SizedBox(
                   height: 100,
                   width: 100,
                   child: Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 100,
                         width: 100,
                         child: StreamBuilder<QuerySnapshot>(
@@ -179,15 +180,108 @@ class _PeopleInfoScreenState extends State<PeopleInfoScreen>
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
-                CustomText(
-                  alignment: Alignment.center,
-                  fontsize: 25,
-                  text: '${snapshot.data.get('email')}',
-                  fontFamily: 'DancingScript',
-                  color: MyColors.yellowColor,
+                const SizedBox(height: 16),
+                Text(
+                  '${snapshot.data.get('email')}',
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          "369",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Đang follow",
+                          style: TextStyle(
+                              fontSize: 14, color: Colors.grey.shade700),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "369",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Follower",
+                          style: TextStyle(
+                              fontSize: 14, color: Colors.grey.shade700),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        UserService.follow(widget.peopleID);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: MyColors.pinkColor,
+                          elevation: 0,
+                          padding: const EdgeInsets.symmetric(horizontal: 60),
+                      ),
+                      child:
+                     !snapshot.data.get('follower').contains(uid) ?
+                      const Text(
+                        "Follow",
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ) : const Icon(Icons.check),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        ChatService.getChatID(
+                          context: context,
+                          peopleID: snapshot.data.get('uID'),
+                          currentUserID: '$uid',
+                          peopleName: snapshot.data.get('fullName'),
+                          peopleImage: snapshot.data.get('avartaURL'),
+                        );
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.08),
+                            borderRadius: BorderRadius.circular(5)
+                          ),
+                          child: const Icon(
+                            Icons.send,
+                            color: Colors.black,
+                          )),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 50,
                   child: TabBar(

@@ -34,10 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         //resizeToAvoidBottomInset: false,
         body: SafeArea(
-          child: IndexedStack(
-            index: _tabIndex,
-            children: _list,
-          ),
+          child: _list[_tabIndex],
         ),
         bottomNavigationBar: CustomAnimatedBottomBar(
           selectedScreenIndex: _tabIndex,
