@@ -16,7 +16,7 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../../../widgets/colors.dart';
 import '../video_page/video_profile_player_screen.dart';
-import 'add_video_screen.dart';
+import '../camera_page/add_video_screen.dart';
 
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key}) : super(key: key);
@@ -56,26 +56,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
         .snapshots();
   }
 
-  pickVideo(ImageSource src, BuildContext context) async {
-    try {
-      final video = await ImagePicker().pickVideo(source: src);
-      print("Videoooooooooooooooooo: $video");
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //     builder: (context) => AddVideoScreen(
-      //       videoFile: File(video!.path),
-      //       videoPath: video.path,
-      //     ),
-      //   ),
-      // )
 
-      // if (video != null) {
-
-      // }
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
 
   showLogoutDialog(BuildContext context) {
     return showDialog(
@@ -146,104 +127,6 @@ class _UserInfoScreenState extends State<UserInfoScreen>
     );
   }
 
-  showOptionsDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) => SimpleDialog(
-        children: [
-          SimpleDialogOption(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => EditUserInfoScreen()),
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                Icon(Icons.edit),
-                Padding(
-                  padding: EdgeInsets.all(7.0),
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SimpleDialogOption(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => UpdatePasswordScreen()),
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                Icon(Icons.lock_clock),
-                Padding(
-                  padding: EdgeInsets.all(7.0),
-                  child: Text(
-                    'Update Password',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SimpleDialogOption(
-            onPressed: () => pickVideo(ImageSource.gallery, context),
-            child: Row(
-              children: const [
-                Icon(Icons.image),
-                Padding(
-                  padding: EdgeInsets.all(7.0),
-                  child: Text(
-                    'Add Video - Gallery',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SimpleDialogOption(
-            onPressed: () => pickVideo(ImageSource.camera, context),
-            child: Row(
-              children: const [
-                Icon(Icons.camera_alt),
-                Padding(
-                  padding: EdgeInsets.all(7.0),
-                  child: Text(
-                    'Add Video - Camera',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SimpleDialogOption(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Row(
-              children: const [
-                Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(7.0),
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(fontSize: 20, color: Colors.red),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,7 +154,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                     //   width: MediaQuery.of(context).size.width / 8,
                     // ),
                     IconButton(
-                      onPressed: () => showOptionsDialog(context),
+                      onPressed: () {},
                       iconSize: 25,
                       icon: Icon(
                         Icons.menu,

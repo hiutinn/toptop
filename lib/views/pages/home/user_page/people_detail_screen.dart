@@ -14,7 +14,7 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import '../../../../database/services/chat_services.dart';
 import '../../../widgets/colors.dart';
 import '../video_page/video_profile_player_screen.dart';
-import 'add_video_screen.dart';
+import '../camera_page/add_video_screen.dart';
 
 class PeopleInfoScreen extends StatefulWidget {
   final String peopleID;

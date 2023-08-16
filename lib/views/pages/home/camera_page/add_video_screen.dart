@@ -39,7 +39,6 @@ class AddVideoScreen extends StatelessWidget {
                   text: "Pushing Video ....",
                   fontsize: 25,
                   alignment: Alignment.center,
-                  fontFamily: 'Popins',
                 ),
               ],
             );
