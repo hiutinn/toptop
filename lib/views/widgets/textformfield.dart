@@ -34,7 +34,6 @@ class CustomTextFormField extends StatelessWidget {
             text: text,
             fontsize: 20,
             color: Colors.black,
-            fontFamily: 'DancingScript',
           ),
           TextFormField(
             obscureText: passCheck == true ? true : false,
