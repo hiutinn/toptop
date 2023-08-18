@@ -30,7 +30,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
             _bottomNavBarItem(0, "Home", style, 'home'),
             _bottomNavBarItem(1, "Chat", style, 'message'),
             _addVideoNavItem(context, barHeight),
-            _bottomNavBarItem(2, "Home", style, 'profile'),
+            _bottomNavBarItem(2, "Mailbox", style, 'profile'),
             _bottomNavBarItem(3, "Profile", style, 'profile'),
           ],
         ),
