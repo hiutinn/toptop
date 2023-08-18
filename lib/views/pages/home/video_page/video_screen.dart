@@ -16,9 +16,8 @@ import '../user_page/people_detail_screen.dart';
 
 class VideoScreen extends StatelessWidget {
   VideoScreen({Key? key}) : super(key: key);
-  String? uid = FirebaseAuth.instance.currentUser?.uid;
 
-  //final TextEditingController _textEditingController = TextEditingController();
+  String? uid = FirebaseAuth.instance.currentUser?.uid;
   CollectionReference videos = FirebaseFirestore.instance.collection('videos');
   final CollectionReference users =
       FirebaseFirestore.instance.collection('users');
@@ -39,9 +38,6 @@ class VideoScreen extends StatelessWidget {
       return videoSnapshot;
     });
   }
-
-  // String avatarURL = '';
-  // String userName = '';
 
   buildProfile(BuildContext context, String profilePhoto, String id, String videoUid) {
     return SizedBox(
@@ -79,7 +75,6 @@ class VideoScreen extends StatelessWidget {
         StreamBuilder(
           stream: users.doc(uid).snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const SizedBox();
             }
@@ -171,214 +166,7 @@ class VideoScreen extends StatelessWidget {
   _showBottomSheet(BuildContext context, String videoID) {
     final TextEditingController _textEditingController =
         TextEditingController();
-    // final page = SizedBox.expand(
-    //   child: DraggableScrollableSheet(
-    //     expand: true,
-    //     initialChildSize: 1,
-    //     builder: (context, scrollController) {
-    //       return Container(
-    //         child: Column(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           crossAxisAlignment: CrossAxisAlignment.center,
-    //           children: [
-    //             const SizedBox(
-    //               height: 10,
-    //             ),
-    //             Row(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: [
-    //                 StreamBuilder<QuerySnapshot>(
-    //                   stream: videos
-    //                       .doc(videoID)
-    //                       .collection('commentList')
-    //                       .snapshots(),
-    //                   builder: (BuildContext context,
-    //                       AsyncSnapshot<QuerySnapshot> snapshot) {
-    //                     if (snapshot.hasError) {
-    //                       return const Text('Something went wrong');
-    //                     }
-    //                     if (snapshot.connectionState ==
-    //                         ConnectionState.waiting) {
-    //                       return Center(
-    //                         child: Container(),
-    //                       );
-    //                     }
-    //                     //Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-    //                     if (snapshot.hasData) {
-    //                       return Text(
-    //                         '${snapshot.data!.docs.length} Comments',
-    //                         style: const TextStyle(fontSize: 18),
-    //                       );
-    //                     }
-    //                     return Container();
-    //                   },
-    //                 ),
-    //               ],
-    //             ),
-    //             Flexible(
-    //               child: StreamBuilder<QuerySnapshot>(
-    //                 stream: videos
-    //                     .doc(videoID)
-    //                     .collection('commentList')
-    //                     .snapshots(),
-    //                 builder: (BuildContext context,
-    //                     AsyncSnapshot<QuerySnapshot> snapshot) {
-    //                   if (snapshot.hasError) {
-    //                     return const Text('Something went wrong');
-    //                   }
-    //                   if (snapshot.connectionState == ConnectionState.waiting) {
-    //                     return Center(
-    //                       child: Container(),
-    //                     );
-    //                   }
-    //                   //Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-    //                   if (snapshot.hasData) {
-    //                     return Column(
-    //                       children: [
-    //                         Expanded(
-    //                           child: ListView.builder(
-    //                             controller: scrollController,
-    //                             itemCount: snapshot.data!.docs.length,
-    //                             itemBuilder: (BuildContext context, int index) {
-    //                               final item = snapshot.data!.docs[index];
-    //                               return Column(
-    //                                 children: [
-    //                                   const SizedBox(
-    //                                     height: 10,
-    //                                   ),
-    //                                   Padding(
-    //                                     padding:
-    //                                         const EdgeInsets.only(left: 8.0),
-    //                                     child: Row(
-    //                                       mainAxisAlignment:
-    //                                           MainAxisAlignment.start,
-    //                                       crossAxisAlignment:
-    //                                           CrossAxisAlignment.start,
-    //                                       children: [
-    //                                         CircleAvatar(
-    //                                           backgroundImage: NetworkImage(
-    //                                               '${item['avatarURL']}'),
-    //                                         ),
-    //                                         const SizedBox(
-    //                                           width: 10,
-    //                                         ),
-    //                                         Column(
-    //                                           crossAxisAlignment:
-    //                                               CrossAxisAlignment.start,
-    //                                           children: [
-    //                                             Text(
-    //                                               '${item['userName']}',
-    //                                               style: const TextStyle(
-    //                                                   fontSize: 14,
-    //                                                   color: Colors.black38),
-    //                                             ),
-    //                                             Container(
-    //                                               width: MediaQuery.of(context)
-    //                                                       .size
-    //                                                       .width *
-    //                                                   3 /
-    //                                                   4,
-    //                                               child: Text(
-    //                                                 '${item['content']}',
-    //                                                 style: const TextStyle(
-    //                                                     fontSize: 16,
-    //                                                     color: Colors.black,
-    //                                                     fontFamily: 'Popins'),
-    //                                               ),
-    //                                             ),
-    //                                             Text(
-    //                                               item['createdOn'] == null
-    //                                                   ? DateTime.now()
-    //                                                       .toString()
-    //                                                   : DateFormat.yMMMd()
-    //                                                       .add_jm()
-    //                                                       .format(
-    //                                                           item['createdOn']
-    //                                                               .toDate()),
-    //                                               style: const TextStyle(
-    //                                                   fontSize: 12,
-    //                                                   color: Colors.black38),
-    //                                             ),
-    //                                           ],
-    //                                         ),
-    //                                         const Spacer(),
-    //                                         Padding(
-    //                                           padding: const EdgeInsets.only(
-    //                                               right: 8.0),
-    //                                           child: Column(
-    //                                             children: [
-    //                                               InkWell(
-    //                                                 onTap: () {
-    //                                                   VideoServices.likeComment(
-    //                                                       videoID, item['id']);
-    //                                                 },
-    //                                                 child: Icon(
-    //                                                   Icons.favorite,
-    //                                                   color: snapshot
-    //                                                           .data!
-    //                                                           .docs[index]
-    //                                                               ['likes']
-    //                                                           .contains(uid)
-    //                                                       ? Colors.red
-    //                                                       : Colors.grey,
-    //                                                 ),
-    //                                               ),
-    //                                               Text(
-    //                                                   '${item['likes'].length}'),
-    //                                             ],
-    //                                           ),
-    //                                         ),
-    //                                       ],
-    //                                     ),
-    //                                   ),
-    //                                 ],
-    //                               );
-    //                             },
-    //                           ),
-    //                         ),
-    //                       ],
-    //                     );
-    //                   }
-    //                   return Container();
-    //                 },
-    //               ),
-    //             ),
-    //             Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Container(
-    //                 height: 40,
-    //                 child: TextField(
-    //                   controller: _textEditingController,
-    //                   textAlignVertical: TextAlignVertical.bottom,
-    //                   decoration: InputDecoration(
-    //                     border: OutlineInputBorder(
-    //                       borderSide: BorderSide(
-    //                         width: 2,
-    //                         color: MyColors.mainColor,
-    //                       ),
-    //                       borderRadius: BorderRadius.circular(10.0),
-    //                     ),
-    //                     hintText: "Comment here ...",
-    //                     suffixIcon: IconButton(
-    //                       onPressed: () {
-    //                         sendComment(_textEditingController.text, videoID);
-    //                         _textEditingController.text = '';
-    //                       },
-    //                       icon: Icon(
-    //                         Icons.send_rounded,
-    //                         color: MyColors.mainColor,
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
+
     final page2 = SizedBox(
       height: MediaQuery.of(context).size.height * 3 / 4,
       child: Column(
@@ -860,8 +648,8 @@ class VideoScreen extends StatelessWidget {
               StorageServices.saveFile(url);
               Navigator.of(context).pop();
             },
-            child: const Row(
-              children: [
+            child: Row(
+              children: const [
                 Icon(Icons.save_alt),
                 Padding(
                   padding: EdgeInsets.all(7.0),
@@ -875,8 +663,8 @@ class VideoScreen extends StatelessWidget {
           ),
           SimpleDialogOption(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Row(
-              children: [
+            child: Row(
+              children: const [
                 Icon(
                   Icons.cancel,
                   color: Colors.red,

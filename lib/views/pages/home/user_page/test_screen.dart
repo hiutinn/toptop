@@ -13,33 +13,15 @@ class _TestScreenState extends State<TestScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late QuerySnapshot querySnapshot;
   late Map<String, dynamic> data;
-  //CollectionReference users = FirebaseFirestore.instance.collection('users');
-  // final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
-  //     .collection('users')
-  //     .where('uID', isEqualTo: 'WrQpTkUiTeh0YagCoP5BCHJrhf62')
-  //     .snapshots();
+
   late Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection('users').snapshots();
 
   @override
   void initState() {
     super.initState();
-    getUID();
     _tabController = TabController(length: 2, vsync: this);
   }
-
-  getUID() async {
-    //_usersStream = await UserService.getUserInfo();
-    //await UserService.getUserInfo().then((snapshot) {
-    //querySnapshot = snapshot;
-    // setState(() {
-    //   Map<String, dynamic> data =
-    //       querySnapshot.docs.first.data() as Map<String, dynamic>;
-    // });
-    //});
-    //data = querySnapshot.docs.first.data() as Map<String, dynamic>;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

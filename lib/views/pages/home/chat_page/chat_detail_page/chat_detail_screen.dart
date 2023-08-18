@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:chat_app_project/database/models/save_model.dart';
+import 'package:chat_app_project/provider/save_model.dart';
 import 'package:chat_app_project/database/services/chat_services.dart';
 import 'package:chat_app_project/views/pages/home/user_page/people_detail_screen.dart';
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../database/models/loading_model.dart';
+import '../../../../../provider/loading_model.dart';
 import '../../../../../database/services/storage_services.dart';
 import '../../../../widgets/colors.dart';
 import '../../../../widgets/text.dart';
