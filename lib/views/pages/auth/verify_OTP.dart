@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_count_down.dart';
-import 'login_phone.dart';
+import '../../../provider/login_phone.dart';
 
 class VerifyOTP extends StatelessWidget {
   @override

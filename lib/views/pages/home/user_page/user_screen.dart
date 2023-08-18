@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:chat_app_project/database/models/loading_model.dart';
+import 'package:chat_app_project/provider/loading_model.dart';
 import 'package:chat_app_project/database/services/auth_service.dart';
 import 'package:chat_app_project/database/services/storage_services.dart';
 import 'package:chat_app_project/database/services/user_service.dart';

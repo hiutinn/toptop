@@ -1,4 +1,4 @@
-import 'package:chat_app_project/database/models/gender_model.dart';
+import 'package:chat_app_project/provider/gender_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

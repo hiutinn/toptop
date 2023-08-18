@@ -2,10 +2,9 @@ import 'package:chat_app_project/views/pages/auth/verify_OTP.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
-import 'login_phone.dart';
+import '../../../provider/login_phone.dart';
 
 class LoginWithPhoneNumber extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginPhoneProvider>(builder: (context, myProvider, _) {
