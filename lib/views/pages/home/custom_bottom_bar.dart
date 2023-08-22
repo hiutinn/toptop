@@ -51,16 +51,20 @@ class CustomAnimatedBottomBar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(
-            "assets/icons/${isSelected ? '${iconName}_filled' : iconName}.svg",
-            color: itemColor,
+          SizedBox(
+            width: 20,
+            height: 20,
+            child: SvgPicture.asset(
+              "assets/icons/${isSelected ? '${iconName}_filled' : iconName}.svg",
+              color: itemColor,
+            ),
           ),
           const SizedBox(
             height: 3,
           ),
           Text(
             label,
-            style: textStyle.copyWith(color: itemColor),
+            style: textStyle.copyWith(color: itemColor, fontSize: 10),
           )
         ],
       ),

@@ -443,7 +443,7 @@ class VideoScreen extends StatelessWidget {
           }
           return SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.91,
+            height: MediaQuery.of(context).size.height * 0.90,
             child: PageView.builder(
               dragStartBehavior: DragStartBehavior.down,
               itemCount: snapshot.data!.docs.length,

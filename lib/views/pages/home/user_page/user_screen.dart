@@ -403,6 +403,7 @@ class _UserInfoScreenState extends State<UserInfoScreen>
                     controller: _tabController,
                     children: <Widget>[
                       SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16, top: 22),
                           child: Column(

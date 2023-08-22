@@ -47,7 +47,7 @@ class AuthScreen extends StatelessWidget {
                 },
                 child: const Text(
                   "Don't have an account? Sign up.",
-                  style: TextStyle(fontSize: 16, color: Colors.blue),
+                  style: TextStyle(fontSize: 12, color: Colors.blue),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -79,7 +79,7 @@ class AuthScreen extends StatelessWidget {
                 children: const [
                   Icon(Icons.phone,color: Colors.black,),
                   SizedBox(width: 20),
-                  Text("Login with Phone number", style: TextStyle(fontSize: 16,color: Colors.black)),
+                  Text("Login with Phone number", style: TextStyle(fontSize: 14,color: Colors.black)),
                 ],
               ),
             ),
@@ -104,7 +104,7 @@ class AuthScreen extends StatelessWidget {
                 children: const [
                   Icon(Icons.email,color: Colors.black,),
                   SizedBox(width: 20),
-                  Text("Login with Email", style: TextStyle(fontSize: 16,color: Colors.black)),
+                  Text("Login with Email", style: TextStyle(fontSize: 14,color: Colors.black)),
                 ],
               ),
             ),

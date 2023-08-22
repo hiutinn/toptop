@@ -76,17 +76,17 @@ class AuthService {
       required fullName,
       required uid}) async {
     try {
-      if (email == null || password == null) {
+      // if (email == null || password == null) {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         await UserService.addUser(
             UID: userCredential.user?.uid, fullName: fullName, email: email);
-      } else {
-        await UserService.addUser(UID: uid, fullName: fullName, email: email);
-      }
-      Navigator.push(
+      // } else {
+      //   await UserService.addUser(UID: uid, fullName: fullName, email: email);
+      // }
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false,
       );
       getSnackBar(
         'Register',
